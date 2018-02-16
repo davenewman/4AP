@@ -19,15 +19,15 @@ int main()
 	double A = 1.0;
 
 	//will cast this as a double and an int so that we can do math with it
-	double n_plus_1 = 100.0;
-	int nplus1 = 100;
+	double n_f = 5.0;
+	int n = 5;
 
 	//BCs
 	double leftBC = 1.0;
 	double rightBC = 0.0;
 
 	//calculate the step size
-	double h = L/n_plus_1;
+	double h = L/(n_f-1);
 
 	//vector a has constant values
 	double a = h*h*r - 2;
@@ -37,32 +37,32 @@ int main()
 	double c = 1.0;
 
 	//initialize three vectors to hold alpha, g, and u
-	double alpha[nplus1];
-	double g[nplus1];
-	double u[nplus1 + 1];
+	double alpha[n];
+	double g[n];
+	double u[n + 1];
 
 	//initialize vector to hold x (only for printing)
-	double x[nplus1 + 1];
+	double x[n + 1];
 
 	u[0] = leftBC;
 	u[nplus1] = rightBC;
 
-	createAlphaAndG(nplus1, alpha, g, A, a, b, c, u[0]);
+	createAlphaAndG(n, alpha, g, A, a, b, c, u[0]);
 	createU(nplus1, u, alpha, g, c);
 	createX(nplus1, x, h);
-	printFunction(nplus1, u, x);
+	printFunction(n, u, x);
 
 
 	return 0;
 }
 
-void createAlphaAndG(int nplus1, double * alpha, double * g, double A, double a, double b, double c, double u_0)
+void createAlphaAndG(int n, double * alpha, double * g, double A, double a, double b, double c, double u_0)
 {
-	int j,k;
+	int j;
 	alpha[0] = a;
 	g[0] = A - u_0;
 
-	for (j = 1; j < nplus1 - 1; j++)
+	for (j = 1; j < n - 1; j++)
 	{
 		alpha[j] = a - (b/alpha[j-1])*c;
 		g[j] = A - (b/alpha[j-1])*g[j-1];
@@ -71,12 +71,12 @@ void createAlphaAndG(int nplus1, double * alpha, double * g, double A, double a,
 }
 
 
-void printFunction(int nplus1, double * u, double * x)
+void printFunction(int n, double * u, double * x)
 {
 
 	int i;
 
-	for (i = 0; i < nplus1; i++)
+	for (i = 0; i < n; i++)
 	{
 		printf("u[%d] = %lf\tx[%d] = %lf\n", i, u[i], i, x[i]);
 	}
@@ -85,14 +85,14 @@ void printFunction(int nplus1, double * u, double * x)
 
 }
 
-void createU(int nplus1, double * u, double * alpha, double * g, double c)
+void createU(int n, double * u, double * alpha, double * g, double c)
 {
 
 	int m;
 
-	u[nplus1-1] = g[nplus1-1]/alpha[nplus1-1];
+	u[n-1] = g[n-1]/alpha[n-1];
 
-	for (m = nplus1 - 2; m > 0; m--)
+	for (m = n - 2; m > 0; m--)
 	{
 		u[m] = (1/alpha[m])*(g[m] - c*u[m+1]);
 	}
@@ -100,11 +100,11 @@ void createU(int nplus1, double * u, double * alpha, double * g, double c)
 
 }
 
-void createX(int nplus1, double * x, double h)
+void createX(int n, double * x, double h)
 {
 	int p;
 
-	for (p = 0; p < nplus1; p++)
+	for (p = 0; p < n; p++)
 	{
 		x[p] = (double)p*h;
 	}
