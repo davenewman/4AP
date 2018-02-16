@@ -7,7 +7,7 @@ the number of points with which to discretize the domain, and the two boundary c
 separated text file containing the values for the independent variable as well as the approximation to the solution u. The .config file should be arranged
 as follows:
 
-******************************4AP.config******************************
+*********************************************4AP.config*********************************************
 <number of points with which to discretize the domain (integer only)>
 <value for k>
 <value for A>
@@ -15,6 +15,6 @@ as follows:
 <right endpoint of domain>
 <left boundary condition value if Dirichlet> OR *<left boundary condition value if Neumann>
 <right boundary condition value if Dirichlet> OR *<right boundary condition value if Neumann>
-**********************************************************************
+****************************************************************************************************
 
 The program uses double precision floating point datatypes.
