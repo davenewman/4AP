@@ -1,20 +1,19 @@
 4AP.c employs the tri-diagonal algorithm to approximate the Heimholtz equation in one dimension:
 
-u'' + (k^2)u = A
+u'' - (k^2)u = A
 
 where k and A are constants. The program begins by parsing the command line which contains the values for both k and A, as well as the domain of interest,
 the number of points with which to discretize the domain, and the two boundary conditions necessary to approximate the solution. The output is a tab 
 separated text file containing the values for the independent variable as well as the approximation to the solution u. The command line arguments should be 
-arranged as follows:
-
-*********************************************Command Line Arguments*********************************************
+arranged as follows
+***************************************Command Line Arguments****************************************
 <number of points with which to discretize the domain (integer only)>
-<value for k>
+<value for k^2>
 <value for A>
 <left endpoint of domain>
 <right endpoint of domain>
 <left boundary condition value if Dirichlet> OR *<left boundary condition value if Neumann>
 <right boundary condition value if Dirichlet> OR *<right boundary condition value if Neumann>
-****************************************************************************************************************
+*****************************************************************************************************
 
 The program uses double precision floating point datatypes.
