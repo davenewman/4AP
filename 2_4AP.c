@@ -10,7 +10,7 @@ void solveTriDiag(double *a, double *b, double *c, double *f, double *u, int n);
 
 void createVectors(double *a, double *b, double *c, double *f, int n, double A);
 
-void printFunction(int n, double * u, int type, double bc1, double bc2, double leftEnd, double rightEnd, double h);
+void printFunction(int n, int numPoints, double * u, int type, double bc1, double bc2, double leftEnd, double rightEnd, double h, double k, double A);
 
 int readConfig(int argc, char *argv[], int *numPoints, double *k, double *A, double *leftEnd, double *rightEnd, double *bc1, double *bc2);
 
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 		
 	printf("\n");
 
-	printFunction(n, u, type, bc1, bc2, leftEnd, rightEnd, h);
+	printFunction(n, numPoints, u, type, bc1, bc2, leftEnd, rightEnd, h, k, A);
 	return 0;
 }
 
@@ -109,36 +109,51 @@ void solveTriDiag(double *a, double *b, double *c, double *f, double*u, int n)	/
 	}
 }
 
-void printFunction(int n, double * u, int type, double bc1, double bc2, double leftEnd, double rightEnd, double h)
+void printFunction(int n, int numPoints, double * u, int type, double bc1, double bc2, double leftEnd, double rightEnd, double h, double k, double A)
 {
+
+	const char* s1 = "t_";
+	const char* s2 = "_n_";
+	const char* s3 = "_k2_";
+	const char* s4 = "_A_";
+	const char* s5 = "_L_";
+	const char* s6 = "_R_";
+	const char* s7 = ".txt";
+	char filename[64];
+	FILE* fp = NULL;
+	sprintf(filename,"%s%d%s%d%s%.1f%s%.1f%s%.1f%s%.1f%s",s1,type,s2,numPoints,s3,k,s4,A,s5,bc1,s6,bc2,s7);
+	printf("Your string is %s\n",filename);
+	fp = fopen(filename,"w");
+	fprintf(fp,"ok\n");
+	
 	int numtoPrint, i;
 	if (type == 0)
 	{
 		numtoPrint = n + 2;
-		printf("%.10lf\t%.10lf\n",leftEnd,bc1);
+		fprintf(fp,"%.15lf\t%.15lf\n",leftEnd,bc1);
 		for (i = 1; i < numtoPrint-1; i++)
-			printf("%.10lf\t%.10lf\n",leftEnd+((double)i)*h,u[i-1]);
-		printf("%.10lf\t%.10lf\n",rightEnd,bc2);
+			fprintf(fp,"%.15lf\t%.15lf\n",leftEnd+((double)i)*h,u[i-1]);
+		fprintf(fp,"%.15lf\t%.15lf\n",rightEnd,bc2);
 	}
 	else if (type == 1)
 	{
 		numtoPrint = n + 1;
 		for (i = 0; i < numtoPrint-1; i++)
-			printf("%.10lf\t%.10lf\n",leftEnd+((double)i)*h,u[i]);
-		printf("%.10lf\t%.10lf\n",rightEnd,bc2);
+			fprintf(fp,"%.15lf\t%.15lf\n",leftEnd+((double)i)*h,u[i]);
+		fprintf(fp,"%.15lf\t%.15lf\n",rightEnd,bc2);
 	}
 	else if (type == 2)
 	{
 		numtoPrint = n + 1;
-		printf("%.10lf\t%.10lf\n",leftEnd,bc1);
+		fprintf(fp,"%.15lf\t%.15lf\n",leftEnd,bc1);
 		for (i = 1; i < numtoPrint; i++)
-			printf("%.10lf\t%.10lf\n",leftEnd+((double)i)*h,u[i]);
+			fprintf(fp,"%.15lf\t%.15lf\n",leftEnd+((double)i)*h,u[i]);
 	}
 	else
 	{
 		numtoPrint = n;
 		for(i = 0; i < numtoPrint; i++)
-			printf("%.10lf\t%.10lf\n",leftEnd+((double)i)*h,u[i]);
+			fprintf(fp,"%.15lf\t%.15lf\n",leftEnd+((double)i)*h,u[i]);
 	}
 }
 
