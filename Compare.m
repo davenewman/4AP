@@ -28,12 +28,12 @@ u2_100 = (exp(-100*x)*(exp(100) - 100*exp(200)))/(10000*(exp(200) + 1)) + (exp(1
 plot(x,u_1_prof,x,u1_10);
 grid on;
 legend('Given in the Assignment','Solution using MATLAB Solver','Location','East');
-title('Solution for k = 10, u(0) = 1, u(1) = 0');
+title('Analytical Solution for k = 10, u(0) = 1, u(1) = 0');
 
 figure;
 plot(x,u_2_prof,x,u2_10);
-legend('Given in the Homework','Solution using MATLAB Solver','Location','East');
-title("Solution for k = 10, u'(0) = 1, u(1) = 0");
+legend('Given in the Assignment','Solution using MATLAB Solver','Location','East');
+title("Analytical Solution for k = 10, u'(0) = 1, u(1) = 0");
 grid on;
 
 
